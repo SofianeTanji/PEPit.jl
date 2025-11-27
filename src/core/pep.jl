@@ -96,7 +96,7 @@ function _eval_points_and_function_values!(pep::PEP, F_val::Vector{Float64}, G_v
     eig_val = ev.values
     eig_vec = ev.vectors
     if minimum(eig_val) < 0
-        verbose && println("🫑 PEPit:  Postprocessing: solver's output is not entirely feasible (smallest eigenvalue: $(minimum(eig_val)) < 0). Projecting Gram matrix.")
+        verbose && println("💻 PEPit:  Postprocessing: solver's output is not entirely feasible (smallest eigenvalue: $(minimum(eig_val)) < 0). Projecting Gram matrix.")
         eig_val = max.(eig_val, 0)
     end
 
@@ -202,7 +202,7 @@ function _logdet_dimension_reduction!(model::JuMP.Model, G, objective, wc_value:
         W = inv(Symmetric(Gcorr + eig_regularization * I(pc)))
 
         @objective(model, Min, sum(W[i, j] * G[i, j] for i in 1:pc, j in 1:pc))
-        verbose && println(" 🫑 PEPit:  Calling SDP solver (logdet step $k)")
+        verbose && println(" 💻 PEPit:  Calling SDP solver (logdet step $k)")
         optimize!(model)
 
         wc_value = value(objective)
@@ -211,8 +211,8 @@ function _logdet_dimension_reduction!(model::JuMP.Model, G, objective, wc_value:
         nb2, thr2, Gcorr = _get_nb_eigs_and_corrected(Gval)
 
         if verbose
-            println(" 🫑 PEPit:  Solver status: $(termination_status(model)); objective value: $(wc_value)")
-            println(" 🫑 PEPit:  Postprocessing: $nb2 eigenvalue(s) > $thr2 after $k logdet step(s)")
+            println(" 💻 PEPit:  Solver status: $(termination_status(model)); objective value: $(wc_value)")
+            println(" 💻 PEPit:  Postprocessing: $nb2 eigenvalue(s) > $thr2 after $k logdet step(s)")
         end
     end
 
@@ -222,7 +222,8 @@ end
 
 
 function solve!(pep::PEP;
-    solver=Mosek.Optimizer,
+    solver=Clarabel.Optimizer,
+    # Options for solver: Clarabel.Optimizer, Mosek.Optimizer
     verbose::Bool=true,
     tracetrick::Bool=false,
     logdetiters::Int=0,
@@ -243,7 +244,7 @@ function solve!(pep::PEP;
     end
 
     pc, ec = Point_counter[], Expression_counter[]
-    verbose && println(" 🫑 PEPit:  Setting up the problem: size of the main PSD matrix: $(pc)x$(pc)")
+    verbose && println(" 💻 PEPit:  Setting up the problem: size of the main PSD matrix: $(pc)x$(pc)")
 
     @variable(model, objective)
 
@@ -253,7 +254,7 @@ function solve!(pep::PEP;
     main_psd_ref = @constraint(model, G in PSDCone())
 
 
-    verbose && println(" 🫑 PEPit:  Setting up the problem: performance measure is minimum of $(length(pep.list_of_performance_metrics)) element(s)")
+    verbose && println(" 💻 PEPit:  Setting up the problem: performance measure is minimum of $(length(pep.list_of_performance_metrics)) element(s)")
     perf_con_refs = Vector{Any}()
     for metric in pep.list_of_performance_metrics
         con = @constraint(model, objective <= _expression_to_jump(metric, F, G))
@@ -261,7 +262,7 @@ function solve!(pep::PEP;
     end
 
 
-    verbose && println(" 🫑 PEPit:  Setting up the problem: Adding initial conditions and general constraints ...")
+    verbose && println(" 💻 PEPit:  Setting up the problem: Adding initial conditions and general constraints ...")
     initial_con_refs = Vector{Any}()
     for cond in pep.list_of_conditions
         expr_jump = _expression_to_jump(cond.expression, F, G)
@@ -270,12 +271,12 @@ function solve!(pep::PEP;
                @constraint(model, expr_jump == 0)
         push!(initial_con_refs, cref)
     end
-    verbose && println(" 🫑 PEPit:  Setting up the problem: initial conditions and general constraints ($(length(pep.list_of_conditions)) constraint(s) added)")
+    verbose && println(" 💻 PEPit:  Setting up the problem: initial conditions and general constraints ($(length(pep.list_of_conditions)) constraint(s) added)")
 
 
     global_psd_refs = Vector{Tuple}()
     if !isempty(pep.list_of_psd)
-        verbose && println(" 🫑 PEPit:  Setting up the problem: $(length(pep.list_of_psd)) lmi constraint(s) added")
+        verbose && println(" 💻 PEPit:  Setting up the problem: $(length(pep.list_of_psd)) lmi constraint(s) added")
         for (k, psd_matrix) in enumerate(pep.list_of_psd)
             n = psd_matrix.shape[1]
             @variable(model, M[1:n, 1:n], Symmetric)
@@ -290,7 +291,7 @@ function solve!(pep::PEP;
     end
 
 
-    verbose && println(" 🫑 PEPit:  Setting up the problem: interpolation conditions for $(length(pep.list_of_functions)) function(s)")
+    verbose && println(" 💻 PEPit:  Setting up the problem: interpolation conditions for $(length(pep.list_of_functions)) function(s)")
     class_con_refs = Vector{Any}()
     class_psd_refs = Vector{Tuple}()
     for (i, f) in enumerate(pep.list_of_functions)
@@ -341,12 +342,12 @@ function solve!(pep::PEP;
     end
 
 
-    verbose && println(" 🫑 PEPit:  Compiling SDP")
+    verbose && println(" 💻 PEPit:  Compiling SDP")
     @objective(model, Max, objective)
-    verbose && println(" 🫑 PEPit:  Calling SDP solver")
+    verbose && println(" 💻 PEPit:  Calling SDP solver")
     optimize!(model)
     if verbose
-        println(" 🫑 PEPit:  Solver status: $(termination_status(model)); optimal value: $(objective |> value)")
+        println(" 💻 PEPit:  Solver status: $(termination_status(model)); optimal value: $(objective |> value)")
     end
     wc_value = value(objective)
 
@@ -355,11 +356,11 @@ function solve!(pep::PEP;
         tol = tol_dimension_reduction
         @constraint(model, objective >= wc_value - tol)
         @objective(model, Min, sum(G[i, i] for i in 1:pc))
-        verbose && println(" 🫑 PEPit:  Calling SDP solver (trace heuristic)")
+        verbose && println(" 💻 PEPit:  Calling SDP solver (trace heuristic)")
         optimize!(model)
         wc_value = value(objective)
         if verbose
-            println(" 🫑 PEPit:  Solver status: $(termination_status(model)); objective value: $(wc_value)")
+            println(" 💻 PEPit:  Solver status: $(termination_status(model)); objective value: $(wc_value)")
         end
     end
 
@@ -367,7 +368,7 @@ function solve!(pep::PEP;
     if logdetiters > 0
         nb, thr, _ = _get_nb_eigs_and_corrected(value.(G))
         if verbose
-            println(" 🫑 PEPit:  Postprocessing: $nb eigenvalue(s) > $thr before dimension reduction")
+            println(" 💻 PEPit:  Postprocessing: $nb eigenvalue(s) > $thr before dimension reduction")
         end
         wc_value = _logdet_dimension_reduction!(model, G, objective, wc_value;
             niter=logdetiters, eig_regularization=eig_regularization,

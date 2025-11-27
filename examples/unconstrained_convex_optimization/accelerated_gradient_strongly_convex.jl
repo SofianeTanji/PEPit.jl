@@ -29,7 +29,7 @@ function wc_accelerated_gradient_strongly_convex(mu, L, n; verbose=false)
 
     if verbose
         @info "🐱 Example file: worst-case performance of the accelerated gradient method" 
-        @info "🫑  PEPit guarantee: f(x_n)-f_*  <= $(round(PEPit_tau, digits=6)) (f(x_0) - f(x_*) + mu/2*||x_0 - x_*||^2)"
+        @info "💻  PEPit guarantee: f(x_n)-f_*  <= $(round(PEPit_tau, digits=6)) (f(x_0) - f(x_*) + mu/2*||x_0 - x_*||^2)"
         @info "📝 Theoretical guarantee: f(x_n)-f_*  <= $(round(theoretical_tau, digits=6)) (f(x_0) - f(x_*) + mu/2*||x_0 - x_*||^2)"
     end
 
