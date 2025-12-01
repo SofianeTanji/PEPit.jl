@@ -106,10 +106,12 @@ Great, now it is time to implement the *fast gradient method* in a loop.
 
 x_new, y = x0, x0
 for i in 1:n
+    global x_new, y  # mark both as globals in this loop
     x_old = x_new
     x_new = y - 1 / L * gradient!(func, y)
     y = x_new + (1 - sqrt(κ)) / (1 + sqrt(κ)) * (x_new - x_old)
 end
+
 
 #=
 
