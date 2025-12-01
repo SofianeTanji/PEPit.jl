@@ -23,7 +23,7 @@ problem = PEP()
 
 Consider the convex minimization problem
 $$f_\star \triangleq \min_x f(x),$$
-where $f$ is $L$-smooth and $\mu$-strongly convex. For this example, let us take $\mu=0.1$ and $L=1$. Let us declare this function type in `PEPit`. 
+where $f$ is $L$-smooth and $\mu$-strongly convex. For this example, let us take $\mu=0.1$ and $L=1$. Let us declare this function type in `PEPit` next. Let us start with defining the parameters $\mu$ and $L$. 
 
 =#
 
@@ -159,6 +159,14 @@ Let us compute the theoretical value of $\tau$.
 @info "📝 Theoretical guarantee: f(x_n)-f_*  <= $(round(τ_Theory, digits=6)) (f(x_0) - f(x_*) + mu/2*||x_0 - x_*||^2)"
 
 #=
+
+We should see the output:
+
+````Julia
+PEPit guarantee: f(x_n)-f_*  <= 0.347602 (f(x_0) - f(x_*) + mu/2*||x_0 - x_*||^2)
+
+Theoretical guarantee: f(x_n)-f_*  <= 0.467544 (f(x_0) - f(x_*) + mu/2*||x_0 - x_*||^2)
+````
 
 So the gurantee that we found via `PEPit` is tighter than the theoretical guarantee!
 

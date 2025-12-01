@@ -42,7 +42,7 @@ Consider the convex minimization problem
 \begin{equation*}
 f_\star \triangleq \min_x f(x),
 \end{equation*}
-where $f$ is $L$-smooth and $\mu$-strongly convex. For this example, let us take $\mu=0.1$ and $L=1$. Let us declare this function type in \texttt{PEPit}. 
+where $f$ is $L$-smooth and $\mu$-strongly convex. For this example, let us take $\mu=0.1$ and $L=1$. Let us declare this function type in \texttt{PEPit} next. Let us start with defining the parameters $\mu$ and $L$. 
 
 \begin{tcblisting}{listing only, minted language=julia, minted options={mathescape=true, breaklines}, colback=lightgray, colframe=black, boxrule=0pt, toprule=2pt, bottomrule=2pt, arc=0pt, outer arc=0pt, left=5pt, right=5pt, top=5pt, bottom=5pt}
 μ = 0.1
@@ -169,6 +169,15 @@ Let us compute the theoretical value of $\tau$.
 @info "💻  PEPit guarantee: f(x_n)-f_*  <= $(round(τ_PEPit, digits=6)) (f(x_0) - f(x_*) + mu/2*||x_0 - x_*||^2)"
 
 @info "📝 Theoretical guarantee: f(x_n)-f_*  <= $(round(τ_Theory, digits=6)) (f(x_0) - f(x_*) + mu/2*||x_0 - x_*||^2)"
+\end{tcblisting}
+
+
+We should see the output:
+
+\begin{tcblisting}{listing only, minted language=julia, minted options={mathescape=true, breaklines}, colback=lightgray, colframe=black, boxrule=0pt, toprule=2pt, bottomrule=2pt, arc=0pt, outer arc=0pt, left=5pt, right=5pt, top=5pt, bottom=5pt}
+PEPit guarantee: f(x_n)-f_*  <= 0.347602 (f(x_0) - f(x_*) + mu/2*||x_0 - x_*||^2)
+
+Theoretical guarantee: f(x_n)-f_*  <= 0.467544 (f(x_0) - f(x_*) + mu/2*||x_0 - x_*||^2)
 \end{tcblisting}
 
 
