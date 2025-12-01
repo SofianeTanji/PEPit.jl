@@ -7,7 +7,7 @@ Before we do anything let us load the necessary packages.
 using PEPit, OrderedCollections, Mosek, MosekTools, Clarabel
 ````
 
-Let us start with defining an empty PEP, which we will populate step by step.
+Let us start with defining an empty PEP, which we will construct step by step.
 
 ````julia
 problem = PEP()
@@ -53,7 +53,7 @@ is valid, where $x_n$ is the output of the **fast gradient** method, and where $
 $\tau(n, L, \mu)$ is computed as the worst-case value of
 $f(x_n)-f_\star$ when $f(x_0) -  f(x_\star) + \frac{\mu}{2}\|x_0 - x_\star\|^2 \leqslant 1$.
 
-## Populate the PEP step by step
+## Construct the PEP step by step
 
 Let us implement the algorithm in PEPit now. For this intorductory example we will let $n=2$.
 
@@ -112,7 +112,7 @@ set_performance_metric!(problem, value!(func, x_new) - fs) # set performance met
 We have everything to build up the PEP. Now time to solve!
 
 ````julia
-τ_PEPit = solve!(problem, solver = Mosek.Optimizer, verbose=true)
+τ_PEPit = solve!(problem; solver = Mosek.Optimizer, verbose=true) # we can use other SDP solvers such as Clarabel, via `solver = Clarabel.Optimizer`
 ````
 
 ### Comparison with theoretical results
