@@ -1,5 +1,7 @@
 module PEPit
 
+
+
 using JuMP
 using Mosek, MosekTools, Clarabel
 using LinearAlgebra
@@ -46,6 +48,7 @@ include("functions/convex_indicator.jl")
 include("operators/lipschitz.jl")
 include("operators/linear.jl")
 include("operators/nonexpansive.jl")
+include("operators/monotone.jl")
 
 include("core/pep.jl")
 
@@ -64,7 +67,7 @@ export
     PEP, Point, Expression, Constraint, PSDMatrix,
     AbstractFunction, PEPFunction,
     ConvexFunction, SmoothFunction, SmoothConvexFunction, SmoothStronglyConvexFunction, StronglyConvexFunction, ConvexIndicatorFunction,
-    LipschitzOperator, LinearOperator, NonexpansiveOperator,
+    LipschitzOperator, LinearOperator, NonexpansiveOperator, MonotoneOperator,
     solve!, declare_function!, set_initial_point!, set_initial_condition!,
     set_performance_metric!, add_constraint!, add_psd_matrix!,
     oracle!, gradient!, value!, stationary_point!, fixed_point!,
