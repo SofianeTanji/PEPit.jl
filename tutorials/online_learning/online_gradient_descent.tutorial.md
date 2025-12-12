@@ -130,7 +130,9 @@ Let us now compare both results!
 ````
 
 If everything went well, both guarantees should match up to numerical precision!
-#### References:
+##### References.
+
+Ther references are as follows.
 
 [1] E. Hazan (2016).
 Introduction to online convex optimization.
