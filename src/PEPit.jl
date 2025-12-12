@@ -39,6 +39,7 @@ include("core/psd_matrix.jl")
 include("core/function.jl")
 
 include("functions/convex_function.jl")
+include("functions/convex_lipschitz_function.jl")
 include("functions/smooth_function.jl")
 include("functions/smooth_convex_function.jl")
 include("functions/smooth_strongly_convex_function.jl")
@@ -62,11 +63,10 @@ include("primitive_steps/proximal_step.jl")
 include("primitive_steps/linear_optimization_step.jl")
 include("primitive_steps/shifted_optimization_step.jl")
 
-
 export
     PEP, Point, Expression, Constraint, PSDMatrix,
     AbstractFunction, PEPFunction,
-    ConvexFunction, SmoothFunction, SmoothConvexFunction, SmoothStronglyConvexFunction, StronglyConvexFunction, ConvexIndicatorFunction,
+    ConvexFunction, ConvexLipschitzFunction, SmoothFunction, SmoothConvexFunction, SmoothStronglyConvexFunction, StronglyConvexFunction, ConvexIndicatorFunction,
     LipschitzOperator, LinearOperator, NonexpansiveOperator, MonotoneOperator,
     solve!, declare_function!, set_initial_point!, set_initial_condition!,
     set_performance_metric!, add_constraint!, add_psd_matrix!,
