@@ -79,7 +79,7 @@ Key steps in the PEP workflow:
 
 Please take a look at the step-by-step tutorial for the minimal example that we just saw for accelerated gradient method for smooth strongly convex minimization below:
 
-[Tutorial 1: Accelerated gradient method for smooth strongly convex minimization](https://github.com/PerformanceEstimation/PEPit.jl/blob/main/tutorials/unconstrained_convex_minimization/accelerated_gradient_strongly_convex/accelerated_gradient_strongly_convex.tutorial.ipynb)
+[Tutorial 1: Accelerated gradient method for smooth strongly convex minimization](https://nbviewer.org/github/PerformanceEstimation/PEPit.jl/blob/main/tutorials/unconstrained_convex_minimization/accelerated_gradient_strongly_convex/accelerated_gradient_strongly_convex.tutorial.ipynb)
 
 You can find other tutorials in the `tutorials` folder of the package. 
 
@@ -89,7 +89,7 @@ We also have many examples in the `examples` folder of the package, please take 
 
 ## Solvers
 
-PEPit.jl uses JuMP and builds an SDP internally. Currently we support: Clarabel and Mosek, but we plan to add more solvers in the future. Note: using Mosek  requires a valid  license to use (free for academic use), where Clarabel is open-source.
+`PEPit.jl` uses `JuMP` and builds an SDP internally. Currently we support: `Clarabel` and `Mosek`, but we plan to add more solvers in the future. Note: using `Mosek`  requires a valid  license to use (free for academic use), where `Clarabel` is open-source.
 
 ## Repository layout
 
