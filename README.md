@@ -8,8 +8,13 @@ The intent of this Julia package is to be functionally equivalent to existing pa
 
 ## Install and test
 
-You can install the package by typing the following in the Julia REPL
+You can install the package by typing the following in the Julia REPL:
 
+```julia
+] add PEPit
+```
+
+To install directly from the github repo, type the following in the Julia REPL:
 ```julia
 ] add https://github.com/PerformanceEstimation/PEPit.jl
 ```
@@ -22,7 +27,7 @@ Then in Julia, you can run the following test to see if the package is working a
 
 ## Minimal example
 
-Below is a condensed example following the style of the examples in `examples/`. It computes a worst-case bound  for accelerated gradient method for smooth strongly convex minimization (please see the `Step-by-Step tutorial` for more details):
+Below is a condensed example following the style of the examples in `examples/`; for other examples please take a look in the `examples/` folder. It computes a worst-case bound  for accelerated gradient method for smooth strongly convex minimization (please also see the `Step-by-Step tutorial` for more details):
 
 ```julia
 using PEPit, OrderedCollections
@@ -79,7 +84,7 @@ Key steps in the PEP workflow:
 
 Please take a look at the step-by-step tutorial for the minimal example that we just saw for accelerated gradient method for smooth strongly convex minimization below:
 
-[Tutorial 1: Accelerated gradient method for smooth strongly convex minimization](https://nbviewer.org/github/PerformanceEstimation/PEPit.jl/blob/main/tutorials/unconstrained_convex_minimization/accelerated_gradient_strongly_convex/accelerated_gradient_strongly_convex.tutorial.ipynb)
+[Tutorial 1: Accelerated gradient method for smooth strongly convex minimization](https://github.com/PerformanceEstimation/PEPit.jl/blob/main/tutorials/unconstrained_convex_minimization/accelerated_gradient_strongly_convex/accelerated_gradient_strongly_convex.tutorial.ipynb)
 
 You can find other tutorials in the `tutorials` folder of the package. 
 
