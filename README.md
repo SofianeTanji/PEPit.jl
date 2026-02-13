@@ -1,8 +1,6 @@
 # PEPit.jl
 
-Hello world!
-
-`PEPit.jl` is a native Julia implementation of the Performance Estimation Programming (PEP) methodology [1,2,3] and the Python package `PEPit` [4]  for worst-case analysis of first-order optimization algorithms. The core idea in PEP is to model the design and analysis of first-order optimization algorithms themselves as higher level optimization problems called performance estimation problems (PEPs) that are semidefinite programming programs (SDPs). We  then solve such SDPs numerically to obtain tight worst-case bounds for known algorithms and also to  discover new algorithms under suitable conditions. 
+`PEPit.jl` is a native Julia implementation of the Performance Estimation Programming (PEP) methodology [1,2,3] and the Python package `PEPit` [4] for worst-case analysis of first-order optimization algorithms. The core idea in PEP is to model the design and analysis of first-order optimization algorithms as higher-level optimization problems called performance estimation problems (PEPs), which are semidefinite programs (SDPs). We then solve these SDPs numerically to obtain tight worst-case bounds for known algorithms and also to discover new algorithms under suitable conditions.
 
 The intent of this Julia package is to be functionally equivalent to existing packages such as `PESTO` [5] and `PEPit` while providing a clean, Julia-native API along with a broader support of commercial and open-source solvers under the `JuMP` ecosystem [6].
 
@@ -14,7 +12,7 @@ You can install the package by typing the following in the Julia REPL:
 ] add PEPit
 ```
 
-To install directly from the github repo, type the following in the Julia REPL:
+To install directly from the GitHub repo, type the following in the Julia REPL:
 ```julia
 ] add https://github.com/PerformanceEstimation/PEPit.jl
 ```
@@ -24,6 +22,14 @@ Then in Julia, you can run the following test to see if the package is working a
 ```julia
 ] test PEPit
 ```
+
+## Reproducible [`Pluto`](`Pluto`) notebook to try out `PEPit.jl`
+
+A completely open-source reproducible `Pluto` notebook to try out a simple `PEPit.jl` example is available at:
+
+[https://pluto.land/n/ds42k2rm](https://pluto.land/n/ds42k2rm)
+
+From this link, you can either download the `Pluto` notebook file and run it locally with `Pluto`, or run the notebook with [`Binder`](https://plutojl.org/en/docs/binder/) directly in your browser!
 
 ## Minimal example
 
@@ -94,7 +100,9 @@ We also have many examples in the `examples` folder of the package, please take 
 
 ## Solvers
 
-`PEPit.jl` uses `JuMP` and builds an SDP internally. Currently we support: `Clarabel` and `Mosek`, but we plan to add more solvers in the future. Note: using `Mosek`  requires a valid  license to use (free for academic use), where `Clarabel` is open-source.
+`PEPit.jl` uses `JuMP` and builds an SDP internally. The default backend in `solve!` is `Mosek.Optimizer`, and you can pass another JuMP-compatible SDP solver through the `solver` keyword (for example, `Clarabel.Optimizer` if you `using Clarabel`).
+
+Currently documented/used solvers in this repository are `Mosek` and `Clarabel`. Note: using `Mosek` requires a valid license (free for academic use), while `Clarabel` is open-source.
 
 ## Repository layout
 
